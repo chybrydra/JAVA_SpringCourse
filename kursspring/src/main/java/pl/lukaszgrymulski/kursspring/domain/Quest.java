@@ -1,14 +1,11 @@
 package pl.lukaszgrymulski.kursspring.domain;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Quest {
 
     private String description;
 
-    public Quest() {
-        description = "Uratować księżniczkę.";
+    public Quest(String description) {
+        this.description = description;
     }
 
     @Override

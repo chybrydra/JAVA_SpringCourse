@@ -1,28 +1,49 @@
 package pl.lukaszgrymulski.kursspring.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
+import java.util.Objects;
+
+
 public class Knight {
-    private String name = "Lancelot";
-    private int age = 29;
+    private String name;
+    private int age;
     private Quest quest;
 
     public Knight(){
-
+        this.name = "Lancelot";
+        this.age = 29;
     }
 
-    public Knight(String name, int age, Quest quest) {
+    public Knight(String name, int age) {
         this.name = name;
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Knight knight = (Knight) o;
+        return age == knight.age;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(age);
+    }
+
+    public void setQuest(Quest quest) {
+        System.out.println("Przydzielam zadanie rycerzowi.");
         this.quest = quest;
     }
 
-    @Autowired
-    public void setQuest(Quest quest) {
-        System.out.println("Łap zadanie rycerzu!");
-        this.quest = quest;
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     @Override
