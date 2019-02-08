@@ -12,6 +12,9 @@
 
 <body>
 <div class="container">
+    Aktualny czas: <span th:text="${timecomponent.time}"/>
+    Posiadane złoto: <span th:text="${playerinformation.gold}"/>
+
     <form class="form-horizontal" th:object="${knight}" th:action="@{/knights}" th:method="post">
         <div class="form-group">
             <label class="control-label">Imie:</label>
