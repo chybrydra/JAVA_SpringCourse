@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
+<beans profile="dev" xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
@@ -7,7 +7,7 @@
     <context:property-placeholder location="classpath:knightRepository.properties"/>
     <import resource="classpath:config/spring-config.xml"/>
 
-    <bean id="castle" class="pl.lukaszgrymulski.kursspring.domain.repositories.KnightRepository" init-method="build" destroy-method="tearDown">
+    <bean id="castle" class="pl.lukaszgrymulski.kursspring.domain.repositories.InMemoryRepository" init-method="build" destroy-method="tearDown">
         <constructor-arg  index="0" ref="lancelot" />
         <property name="name" value="${my.castle.name:East Watch}" />
     </bean>

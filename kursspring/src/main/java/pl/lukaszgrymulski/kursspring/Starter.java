@@ -1,6 +1,7 @@
 package pl.lukaszgrymulski.kursspring;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,8 +24,12 @@ public class Starter implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        questRepository.createRandomQuest();
+        questRepository.createRandomQuest();
+
+        System.out.println(knightRepository);
+
         questService.assignRandomQuest("Lancelot");
         questService.assignRandomQuest("Percival");
-        System.out.println(knightRepository);
     }
 }

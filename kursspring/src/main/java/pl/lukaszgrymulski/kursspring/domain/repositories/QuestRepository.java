@@ -1,14 +1,18 @@
 package pl.lukaszgrymulski.kursspring.domain.repositories;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import pl.lukaszgrymulski.kursspring.domain.Quest;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Repository
 public class QuestRepository {
+
+    Random rand = new Random();
 
     List<Quest> questList = new ArrayList<>();
 
@@ -26,8 +30,6 @@ public class QuestRepository {
 
     @PostConstruct
     public void init(){
-        createQuest("Uratuj księżniczkę");
-        createQuest("Weź udział w turnieju");
     }
 
     @Override
@@ -35,5 +37,17 @@ public class QuestRepository {
         return "QuestRepository{" +
                 "questList=" + questList +
                 '}';
+    }
+
+    @Scheduled(fixedDelayString = "${questCreationDelay}")
+    public void createRandomQuest(){
+        List<String> descriptions = new ArrayList<>();
+        descriptions.add("Uratuj księżniczkę");
+        descriptions.add("Weź udział w turnieju");
+        descriptions.add("Zabij bandę goblinów");
+        descriptions.add("Zabij smoka");
+        String description = descriptions.get(rand.nextInt(descriptions.size()));
+        System.out.println("Utworzyłem zadanie o opisie: " + description);
+        createQuest(description);
     }
 }

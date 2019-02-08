@@ -1,9 +1,8 @@
 package pl.lukaszgrymulski.kursspring.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import pl.lukaszgrymulski.kursspring.domain.Knight;
 import pl.lukaszgrymulski.kursspring.domain.Quest;
 import pl.lukaszgrymulski.kursspring.domain.repositories.KnightRepository;
 import pl.lukaszgrymulski.kursspring.domain.repositories.QuestRepository;
