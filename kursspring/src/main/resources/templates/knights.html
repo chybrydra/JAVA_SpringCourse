@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Show knights</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+    <script th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Imie rycerza</td>
+                <td>Poziom</td>
+                <td></td>
+            </tr>
+        </thead>
+
+        <tbody th:each="knight : ${knights}">
+            <tr>
+                <td th:text="${knight.id}"></td>
+                <td th:text="${knight.name}"></td>
+                <td th:text="${knight.level}"></td>
+                <td><a th:href="${'/knight?id='+knight.id}">Podgląd</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <a href="/newknight" class="btn btn-outline-dark">Zrekrutuj nowego rycerza</a>
+    </div>
+</div>
+</body>
+
+</html>

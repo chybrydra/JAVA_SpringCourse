@@ -3,20 +3,44 @@ package pl.lukaszgrymulski.kursspring.domain.repositories;
 import pl.lukaszgrymulski.kursspring.domain.Knight;
 
 import javax.annotation.PostConstruct;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class InMemoryRepository implements KnightRepository {
 
-    Map<String, Knight> knights = new HashMap<>();
+    Map<Integer, Knight> knights = new HashMap<>();
 
     public InMemoryRepository() { }
 
     @Override
     public void createKnight(String name, int age){
-        knights.put(name, new Knight(name, age));
+        Knight newKnight = new Knight(name, age);
+        newKnight.setId(getNewId());
+        knights.put(newKnight.getId(), newKnight);
+    }
+
+    private int getNewId() {
+        if (knights.isEmpty()) {
+            return 0;
+        } else {
+            Set<Integer> idSet = knights.keySet();
+            Integer maxId=0;
+            for (Integer id : idSet){
+                maxId = id>maxId ? id : maxId;
+            }
+            return maxId+1;
+        }
+    }
+
+    @Override
+    public void createKnight(Knight knight) {
+        knight.setId(getNewId());
+        knights.put(knight.getId(), knight);
+    }
+
+    @Override
+    public Knight getKnightById(Integer id) {
+        return knights.get(id);
     }
 
     @Override
@@ -25,13 +49,17 @@ public class InMemoryRepository implements KnightRepository {
     }
 
     @Override
-    public Knight getKnight(String name){
-        return knights.get(name);
+    public Optional<Knight> getKnight(String name){
+        Optional<Knight> knightByName = knights.values()
+                .stream()
+                .filter(knight -> knight.getName().equals(name))
+                .findAny();
+        return knightByName;
     }
 
     @Override
-    public void deleteKnight(String name){
-        knights.remove(name);
+    public void deleteKnight(Integer id){
+        knights.remove(id);
     }
 
     @Override
