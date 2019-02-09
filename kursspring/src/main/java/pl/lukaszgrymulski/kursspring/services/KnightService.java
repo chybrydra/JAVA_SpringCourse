@@ -29,4 +29,8 @@ public class KnightService {
     public void deleteKnight(Integer id) {
         repository.deleteKnight(id);
     }
+
+    public void updateKnight(Knight knight) {
+        repository.updateKnight(knight.getId(), knight);
+    }
 }

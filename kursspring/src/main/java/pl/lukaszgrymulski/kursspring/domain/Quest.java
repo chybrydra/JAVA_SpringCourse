@@ -2,14 +2,24 @@ package pl.lukaszgrymulski.kursspring.domain;
 
 public class Quest {
 
+    private int id;
     private String description;
     private int reward = 100;
     private int length = 30000;
     private boolean started = false;
     private boolean completed = false;
 
-    public Quest(String description) {
+    public Quest(int id, String description) {
+        this.id = id;
         this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescription() {
