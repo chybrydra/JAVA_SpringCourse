@@ -1,6 +1,7 @@
 package pl.lukaszgrymulski.kursspring.domain.repositories;
 
 import pl.lukaszgrymulski.kursspring.domain.Knight;
+import pl.lukaszgrymulski.kursspring.utils.Ids;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -15,26 +16,13 @@ public class InMemoryRepository implements KnightRepository {
     @Override
     public void createKnight(String name, int age){
         Knight newKnight = new Knight(name, age);
-        newKnight.setId(getNewId());
+        newKnight.setId(Ids.getNewId(knights.keySet()));
         knights.put(newKnight.getId(), newKnight);
-    }
-
-    private int getNewId() {
-        if (knights.isEmpty()) {
-            return 0;
-        } else {
-            Set<Integer> idSet = knights.keySet();
-            Integer maxId=0;
-            for (Integer id : idSet){
-                maxId = id>maxId ? id : maxId;
-            }
-            return maxId+1;
-        }
     }
 
     @Override
     public void createKnight(Knight knight) {
-        knight.setId(getNewId());
+        knight.setId(Ids.getNewId(knights.keySet()));
         knights.put(knight.getId(), knight);
     }
 

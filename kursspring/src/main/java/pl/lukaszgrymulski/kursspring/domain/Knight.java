@@ -1,14 +1,26 @@
 package pl.lukaszgrymulski.kursspring.domain;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 
 public class Knight {
 
     private int id;
+
+    @NotNull
+    @Size(min=2, max=40, message="Imię rycerza musi mieć między 2-40 znaków")
     private String name;
+
+    @NotNull
+    @Range(min=18, max=60, message="Rycerz musi mieć pomiędzy 18 a 60 lat")
     private int age;
+
     private int level;
+
     private Quest quest;
 
     public Knight(){
@@ -53,6 +65,10 @@ public class Knight {
         this.level = level;
     }
 
+    public Quest getQuest() {
+        return quest;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,7 +83,7 @@ public class Knight {
     }
 
     public void setQuest(Quest quest) {
-        System.out.println("Przydzielam zadanie rycerzowi.");
+        quest.setStarted(true);
         this.quest = quest;
     }
 

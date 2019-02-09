@@ -20,6 +20,8 @@
                 <td>Id</td>
                 <td>Imie rycerza</td>
                 <td>Poziom</td>
+                <td>Zadanie</td>
+                <td></td>
                 <td></td>
             </tr>
         </thead>
@@ -29,6 +31,12 @@
                 <td th:text="${knight.id}"></td>
                 <td th:text="${knight.name}"></td>
                 <td th:text="${knight.level}"></td>
+                <td>
+                    <span th:if="${knight.quest==null}" >
+                        Brak aktualnego zadania <a th:href="${'/assignQuest?knightId='+knight.id}">Przypisz zadanie</a>
+                    </span>
+                    <span th:if="${knight.quest!=null}" th:text="${knight.quest.description}" />
+                </td>
                 <td><a th:href="${'/knight?id='+knight.id}">Podgląd</a></td>
                 <td><a th:href="${'/knight/delete/'+knight.id}">Usuń</a></td>
             </tr>
