@@ -1,13 +1,16 @@
 package pl.lukaszgrymulski.kursspring.domain;
 
+import java.time.LocalDateTime;
+
 public class Quest {
 
     private int id;
     private String description;
     private int reward = 100;
-    private int length = 30000;
+    protected int lengthInSeconds = 10;
     private boolean started = false;
     private boolean completed = false;
+    protected LocalDateTime startDate;
 
     public Quest(int id, String description) {
         this.id = id;
@@ -39,11 +42,11 @@ public class Quest {
     }
 
     public int getLength() {
-        return length;
+        return lengthInSeconds;
     }
 
-    public void setLength(int length) {
-        this.length = length;
+    public void setLength(int lengthInSeconds) {
+        this.lengthInSeconds = lengthInSeconds;
     }
 
     public boolean isStarted() {
@@ -51,15 +54,23 @@ public class Quest {
     }
 
     public void setStarted(boolean started) {
+        if (started) {
+            this.startDate = LocalDateTime.now();
+        }
         this.started = started;
     }
 
     public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+        if (this.completed) {
+            return this.completed;
+        }
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime questEndDate = this.startDate.plusSeconds(this.lengthInSeconds);
+        boolean isAfter = now.isAfter(questEndDate);
+        if (isAfter) {
+            this.completed = true;
+        }
+        return isAfter;
     }
 
     @Override
