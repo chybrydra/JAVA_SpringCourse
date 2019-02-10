@@ -8,12 +8,16 @@ import pl.lukaszgrymulski.kursspring.domain.repositories.KnightRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Component
 public class KnightService {
 
     @Autowired
     KnightRepository repository;
+
+    @Autowired
+    PlayerInformation playerInformation;
 
 
     public List<Knight> getAllKnights(){
@@ -37,15 +41,35 @@ public class KnightService {
     }
 
     public int collectRewards() {
+
+        Predicate<Knight> knightPredicate = knight -> {
+            if (knight.getQuest() != null) {
+                return knight.getQuest().isCompleted();
+            } else {
+                return false;
+            }
+        };
+
         int sum = repository.getAllKnights().stream()
-                .filter(knight -> knight.getQuest().isCompleted())
+                .filter(knightPredicate)
                 .mapToInt(knight -> knight.getQuest().getReward())
                 .sum();
 
         repository.getAllKnights().stream()
-                .filter(knight -> knight.getQuest().isCompleted())
+                .filter(knightPredicate)
                 .forEach(knight -> knight.setQuest(null));
 
         return sum;
+    }
+
+    public void getMyGold(){
+        List<Knight> allKnights = getAllKnights();
+        allKnights.forEach(knight -> {
+            if (knight.getQuest() != null) {
+                knight.getQuest().isCompleted();
+            }
+        });
+        int currentGold = playerInformation.getGold();
+        playerInformation.setGold(currentGold + collectRewards());
     }
 }
