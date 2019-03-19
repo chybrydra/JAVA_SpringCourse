@@ -9,19 +9,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.lukaszgrymulski.kursspring.controllers.QuestController;
-import pl.lukaszgrymulski.kursspring.domain.Knight;
 import pl.lukaszgrymulski.kursspring.domain.PlayerInformation;
-import pl.lukaszgrymulski.kursspring.domain.Quest;
 import pl.lukaszgrymulski.kursspring.services.KnightService;
 import pl.lukaszgrymulski.kursspring.services.QuestService;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -54,7 +47,6 @@ public class WebContextTest {
         mockMvc.perform(get("/checkQuests"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/knights"));
-
     }
 
     @Test

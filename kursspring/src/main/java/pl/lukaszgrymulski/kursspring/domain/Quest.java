@@ -1,16 +1,29 @@
 package pl.lukaszgrymulski.kursspring.domain;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Quest {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private String description;
+
     private int reward = 100;
+
     protected int lengthInSeconds = 10;
+
     private boolean started = false;
+
     private boolean completed = false;
+
     protected LocalDateTime startDate;
+
+    public Quest() {
+    }
 
     public Quest(int id, String description) {
         this.id = id;
