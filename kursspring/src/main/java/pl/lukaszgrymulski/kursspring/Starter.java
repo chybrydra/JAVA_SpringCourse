@@ -8,6 +8,8 @@ import pl.lukaszgrymulski.kursspring.domain.repositories.KnightRepository;
 import pl.lukaszgrymulski.kursspring.domain.repositories.QuestRepository;
 import pl.lukaszgrymulski.kursspring.services.QuestService;
 
+import javax.transaction.Transactional;
+
 @Component
 @Scope("singleton")
 public class Starter implements CommandLineRunner {
@@ -22,6 +24,7 @@ public class Starter implements CommandLineRunner {
     QuestService questService;
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         questRepository.createRandomQuest();
         questRepository.createRandomQuest();
