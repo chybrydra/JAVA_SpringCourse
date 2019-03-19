@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
-@Component
 @Entity
 public class PlayerInformation {
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.lukaszgrymulski.kursspring.components.TimeComponent;
 import pl.lukaszgrymulski.kursspring.domain.Knight;
 import pl.lukaszgrymulski.kursspring.domain.PlayerInformation;
+import pl.lukaszgrymulski.kursspring.domain.repositories.PlayerInformationRepository;
 import pl.lukaszgrymulski.kursspring.services.KnightService;
 
 import javax.validation.Valid;
@@ -20,7 +21,7 @@ import java.util.List;
 public class KnightController {
 
     @Autowired
-    PlayerInformation playerInformation;
+    PlayerInformationRepository playerInformationRepository;
 
     @Autowired
     TimeComponent timeComponent;
@@ -31,6 +32,7 @@ public class KnightController {
     @RequestMapping("/knights")
     public String getKnights(Model model){
         List<Knight> allKnights = service.getAllKnights();
+        PlayerInformation playerInformation = playerInformationRepository.getFirst();
         model.addAttribute("knights", allKnights);
         model.addAttribute("timecomponent", timeComponent);
         model.addAttribute("playerinformation", playerInformation);
@@ -40,6 +42,7 @@ public class KnightController {
     @RequestMapping("/knight")
     public String getKnight(@RequestParam("id") Integer id, Model model){
         Knight knight = service.getKnight(id);
+        PlayerInformation playerInformation = playerInformationRepository.getFirst();
         model.addAttribute("knight", knight);
         model.addAttribute("timecomponent", timeComponent);
         model.addAttribute("playerinformation", playerInformation);
@@ -50,6 +53,7 @@ public class KnightController {
     public String createKnight(Model model){
         model.addAttribute("knight", new Knight());
         model.addAttribute("timecomponent", timeComponent);
+        PlayerInformation playerInformation = playerInformationRepository.getFirst();
         model.addAttribute("playerinformation", playerInformation);
         return "knightform";
     }

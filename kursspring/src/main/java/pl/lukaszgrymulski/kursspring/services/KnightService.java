@@ -5,7 +5,10 @@ import org.springframework.stereotype.Component;
 import pl.lukaszgrymulski.kursspring.domain.Knight;
 import pl.lukaszgrymulski.kursspring.domain.PlayerInformation;
 import pl.lukaszgrymulski.kursspring.domain.repositories.KnightRepository;
+import pl.lukaszgrymulski.kursspring.domain.repositories.PlayerInformationRepository;
+import pl.lukaszgrymulski.kursspring.domain.repositories.QuestRepository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -14,10 +17,13 @@ import java.util.function.Predicate;
 public class KnightService {
 
     @Autowired
+    QuestRepository questRepository;
+
+    @Autowired
     KnightRepository repository;
 
     @Autowired
-    PlayerInformation playerInformation;
+    PlayerInformationRepository playerInformationRepository;
 
 
     public List<Knight> getAllKnights(){
@@ -62,14 +68,19 @@ public class KnightService {
         return sum;
     }
 
+    @Transactional
     public void getMyGold(){
         List<Knight> allKnights = getAllKnights();
         allKnights.forEach(knight -> {
             if (knight.getQuest() != null) {
-                knight.getQuest().isCompleted();
+                boolean completed = knight.getQuest().isCompleted();
+                if(completed) {
+                    questRepository.update(knight.getQuest());
+                }
             }
         });
-        int currentGold = playerInformation.getGold();
-        playerInformation.setGold(currentGold + collectRewards());
+        PlayerInformation first = playerInformationRepository.getFirst();
+        int currentGold = first.getGold();
+        first.setGold(currentGold + collectRewards());
     }
 }
