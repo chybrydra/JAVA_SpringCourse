@@ -1,7 +1,6 @@
 package pl.lukaszgrymulski.kursspring.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.lukaszgrymulski.kursspring.domain.Quest;
 import pl.lukaszgrymulski.kursspring.domain.repositories.KnightRepository;
@@ -25,7 +24,7 @@ public class QuestService {
         List<Quest> allQuests = questRepository.getAll();
         Quest randomQuest = allQuests.get(rand.nextInt(allQuests.size()));
         knightRepository.getKnight(knightName).ifPresent(knight -> knight.setQuest(randomQuest));
-        questRepository.deleteQuest(randomQuest);
+
     }
 
     public List<Quest> getAllNotStartedQuests() {
